@@ -80,7 +80,7 @@ recommend:
 
 # Configure website favicon and LOGO
 # 配置网站favicon和网站LOGO
-favicon: /favicon
+favicon: /favicon.jpg
 logo: /medias/logo.jpg
 
 # The configuration of the second button in the home banner,
@@ -90,7 +90,7 @@ indexbtn:
   enable: true
   name: Github
   icon: fa-github-alt
-  url: https://18613804226.github.io/hexo.github.io/
+  url: https://github.com/18613804226/18613804226.github.io
 
 # The configurations of the second line of home banner
 # icon/button will not show up if you leave the corresponding socialLink empty
@@ -173,7 +173,7 @@ profile:
 # If you don't want to display this `My Projects` content, you can deactivate or delete this configuration.
 # 在“关于”页面配置"我的项目"信息，如果你不需要这些信息则可以将其设置为不激活或者将其删除.
 myProjects:
-  enable: true
+  enable: false
   data:
     hexo-matery-modified:
       icon: fa-meetup
@@ -287,7 +287,7 @@ valine:
 # 配置是否在 header 中显示 fork me on github 的图标，默认为true，你可以修改为你的仓库地址.
 githubLink:
   enable: true
-  url: https://18613804226.github.io/hexo.github.io/
+  url: https://github.com/18613804226/18613804226.github.io
   title: Fork Me
 
 # The password verification feature of read post. To use this feature,
