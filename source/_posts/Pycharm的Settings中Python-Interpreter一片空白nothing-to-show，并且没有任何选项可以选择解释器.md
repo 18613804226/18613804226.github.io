@@ -7,8 +7,8 @@ mathjax: true
 date: 2021-09-16 17:53:27
 password:
 summary:
-tags:
-categories:
+tags: Pycharm python
+categories: 软件工具
 ---
 解决方法：
 

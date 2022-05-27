@@ -45,7 +45,7 @@ dream:
 # 是否在首页显示音乐.
 music:
   enable: false
-  showTitle: false
+  showTitle: true
   title: 听听音乐
   fixed: false # 开启吸底模式
   autoplay: true # 是否自动播放
@@ -99,7 +99,7 @@ socialLink:
   qq: 553807266
   github: ''
   weibo: ''
-  email: ''
+  email: '553807266@qq.com'
   zhihu: ''
 
 # Whether to activate the Post TOC, and Configure which title types are supported by TOC support.
