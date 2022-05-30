@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>Element-ui Table 组件中动态合并单元格</title>
+      <link href="/2022/01/25/element-ui-table-zu-jian-zhong-dong-tai-he-bing-dan-yuan-ge/"/>
+      <url>/2022/01/25/element-ui-table-zu-jian-zhong-dong-tai-he-bing-dan-yuan-ge/</url>
+      
+        <content type="html"><![CDATA[<p>上代码</p><pre><code>&lt;template&gt;  &lt;div class=&quot;table&quot;&gt;    &lt;el-table      :data=&quot;tableData !== null ? tableData.slice((currentPage-1)*pageSize,currentPage*pageSize) : []&quot;      style=&quot;width: 100%&quot;      :max-height=&quot;tableHeight === 0 ? &#39;100%&#39; : tableHeight&quot;      fit      :header-row-class-name=&quot;tableRowClassName&quot;      :span-method=&quot;objectSpanMethod&quot;      :class=&quot;version&quot;      @selection-change=&quot;handleSelectionChange&quot;      @row-click=&quot;clickTable&quot;    &gt;      &lt;template v-for=&quot;(item, index) of columns&quot;&gt;        &lt;el-table-column          v-if=&quot;item.type === &#39;text&#39;&quot;          :key=&quot;index&quot;          :fixed=&quot;item.fixed&quot;          :prop=&quot;item.id&quot;          :label=&quot;item.label&quot;          :align=&quot;item.align ? item.align : &#39;center&#39;&quot;          :width=&quot;item.width&quot;          :show-overflow-tooltip=&quot;true&quot;          :formatter=&quot;format&quot;        &gt;          &lt;!--if判断的是父组件传的表头是操作的id名--&gt;          &lt;template slot-scope=&quot;scope&quot;&gt;            &lt;el-button              type=&quot;text&quot;              size=&quot;small&quot;              @click=&quot;handleDelete(scope.row,scope.column)&quot;            &gt;              &lt;el-link type=&quot;primary&quot;&gt;{{ scope.row[item.id] }}&lt;/el-link&gt;            &lt;/el-button&gt;            &lt;!--可以自行增加按钮，请改变点击事件的第二个参数，父组件会根据第二个参数判断当前点击的是什么按钮--&gt;          &lt;/template&gt;        &lt;/el-table-column&gt;        &lt;el-table-column          v-else-if=&quot;item.id === &#39;button&#39;&quot;          :key=&quot;index&quot;          :fixed=&quot;item.fixed&quot;          :prop=&quot;item.id&quot;          :label=&quot;item.label&quot;          :align=&quot;item.align ? item.align : &#39;center&#39;&quot;          :width=&quot;item.width&quot;          :show-overflow-tooltip=&quot;false&quot;          :formatter=&quot;format&quot;        &gt;          &lt;!--if判断的是父组件传的表头是操作的id名--&gt;          &lt;template slot-scope=&quot;scope&quot;&gt;            &lt;el-button              v-for=&quot;item2 in item.list&quot;              :key=&quot;item2.id&quot;              size=&quot;mini&quot;              :type=&quot;item2.type&quot;              :disabled=&quot;scope.row.is_used === 1 ? true : false&quot;              @click=&quot;handleEdit(scope.row, item2.id)&quot;            &gt;{{ item2.name }}&lt;/el-button&gt;            &lt;!--可以自行增加按钮，请改变点击事件的第二个参数，父组件会根据第二个参数判断当前点击的是什么按钮--&gt;          &lt;/template&gt;        &lt;/el-table-column&gt;        &lt;el-table-column          v-else-if=&quot;item.index === &#39;index&#39;&quot;          :key=&quot;index&quot;          :type=&quot;item.index&quot;          :width=&quot;item.width&quot;        /&gt;        &lt;!-- &lt;el-table-column          v-else-if=&quot;item.isShow === false&quot;          :key=&quot;index&quot;          :type=&quot;item.index&quot;          :width=&quot;item.width&quot;        /&gt;--&gt;        &lt;el-table-column          v-else-if=&quot;item.type === &#39;color&#39;&quot;          :key=&quot;index&quot;          :label=&quot;item.label&quot;          :fixed=&quot;item.fixed&quot;          :prop=&quot;item.id&quot;          :align=&quot;item.align ? item.align : &#39;center&#39;&quot;          :width=&quot;item.width&quot;          :type=&quot;item.type&quot;          :show-overflow-tooltip=&quot;true&quot;          :formatter=&quot;format&quot;        &gt;          &lt;!--可以传align,width和type来控制表格的居中，宽度和类型（比如需要序号，type传index）--&gt;          &lt;!-- &lt;template slot-scope=&quot;scope&quot;&gt;            &lt;span style=&quot; color:scope.row.color&quot;&gt;{{ scope.row.color }}&lt;/span&gt;          &lt;/template&gt;--&gt;          &lt;!-- :style=&quot;{backgroundColor:row[item.label][1]}&quot; --&gt;          &lt;!--  --&gt;          &lt;template slot-scope=&quot;{row}&quot;&gt;            &lt;span              v-if=&quot;Array.isArray(row[item.label])&quot;              :style=&quot;{color:row[item.label][1] !== &#39;00000000&#39; ? row[item.label][1] : &#39;&#39;, fontWeight: row[item.label][1] !== &#39;00000000&#39; ? &#39;900&#39; : &#39;400&#39;}&quot;            &gt;{{ Array.isArray(row[item.label]) ? row[item.label][0] : row[item.label] }}&lt;/span&gt;            &lt;span v-else&gt;{{ row[item.label] }}&lt;/span&gt;          &lt;/template&gt;        &lt;/el-table-column&gt;        &lt;el-table-column          v-else          :key=&quot;index&quot;          :label=&quot;item.label&quot;          :fixed=&quot;item.fixed&quot;          :prop=&quot;item.id&quot;          :align=&quot;item.align ? item.align : &#39;center&#39;&quot;          :width=&quot;item.width&quot;          :type=&quot;item.type&quot;          :show-overflow-tooltip=&quot;true&quot;          :formatter=&quot;format&quot;        &gt;          &lt;!-- === --&gt;        &lt;/el-table-column&gt;      &lt;/template&gt;    &lt;/el-table&gt;    &lt;el-pagination      v-if=&quot;        show&quot;      style=&quot;float:right&quot;      :current-page=&quot;currentPage&quot;      :page-sizes=&quot;pagesizes&quot;      :page-size=&quot;pageSize&quot;      layout=&quot;total, sizes, prev, pager, next, jumper&quot;      :total=&quot;total&quot;      @size-change=&quot;handleSizeChange&quot;      @current-change=&quot;handleCurrentChange&quot;    /&gt;  &lt;/div&gt;&lt;/template&gt;&lt;script&gt;export default {  props: {    tableData: {      // 表格数据源 默认为空数组      type: Array,      default: () =&gt; []    },    columns: {      // 表格的字段展示 默认为空数组      type: Array,      default: () =&gt; []    },    pagesizes: {      type: Array,      default: () =&gt; []    },    total: { type: Number, default: 0 },    tableHeight: { type: Number, default: 0 },    show: { type: Boolean, default: false },    version: { type: String, default: &#39;&#39; }  },  data() {    return {      currentPage: 1,      pageSize: 10,      testArr1: [],      testArr2: [],      testPosition1: 0,      testPosition2: 0,      listData: 0    }  },  watch: {    tableData() {      this.currentPage = 1      this.listData = this.tableData.slice(        (this.currentPage - 1) * this.pageSize,        this.currentPage * this.pageSize      )      this.testArr1 = []      this.rowspan(this.testArr1, this.testPosition1, &#39;labelName&#39;)    }  },  mounted() {    // console.log(this.tableData)    // this.merge()  },  methods: {    // 正常    handleSelectionChange(val) {      this.$emit(&#39;handleSelectionChange&#39;, { val: val })    },    // 正常    clickTable(row, column, event) {      this.$emit(&#39;clickTable&#39;, { row: row, column: column, event: event })    },    // 正常    handleEdit(index, row) {      this.$emit(&#39;handleEdit&#39;, { index: index, row: row })    },    // 正常    handleDelete(row, column) {      // this.$emit(&#39;handleDelete&#39;, row)      this.StringUtil(row, column)    },    handleSizeChange(val) {      // console.log(`每页 ${val} 条`)      // this.$emit(&#39;handleSizeChange&#39;, val)      this.pageSize = val      this.listData = this.tableData.slice(        (this.currentPage - 1) * this.pageSize,        this.currentPage * this.pageSize      )      this.testArr1 = []      this.rowspan(this.testArr1, this.testPosition1, &#39;labelName&#39;)    },    handleCurrentChange(val) {      // console.log(`当前页: ${val}`)      // this.$emit(&#39;handleCurrentChange&#39;, val)      this.currentPage = val      // console.log(      //   this.tableData.slice(      //     (this.currentPage - 1) * this.pageSize,      //     this.currentPage * this.pageSize      //   )      // )      this.listData = this.tableData.slice(        (this.currentPage - 1) * this.pageSize,        this.currentPage * this.pageSize      )      this.testArr1 = []      this.rowspan(this.testArr1, this.testPosition1, &#39;labelName&#39;)    },    tableRowClassName({ row, rowIndex }) {      // console.log(row, rowIndex)      if (rowIndex === 0) {        return &#39;warning-row&#39;      } else if (rowIndex === 1) {        return &#39;warning-row&#39;      }      return &#39;&#39;    },    format(row, column) {      // console.log(row, column)      if (column.property === &#39;story_start_dev_time&#39;) {        return this.formatTime(row.story_start_dev_time)      } else if (column.property === &#39;story_assigned_time&#39;) {        return this.formatTime(row.story_assigned_time)      } else if (column.property === &#39;story_created_time&#39;) {        return this.formatTime(row.story_created_time)      } else if (column.property === &#39;story_judged_time&#39;) {        return this.formatTime(row.story_judged_time)      } else if (column.property === &#39;remain_rate&#39;) {        return this.formatPercentage(row.remain_rate)      } else if (column.property === &#39;lowcase_rate&#39;) {        return this.formatPercentage(row.lowcase_rate)      } else if (column.property === &#39;reopen_rate&#39;) {        return this.formatPercentage(row.reopen_rate)      } else if (column.property === &#39;vaild_rate&#39;) {        return this.formatPercentage(row.vaild_rate)      } else if (column.property === &#39;fatal_bug_fix_compliance_rate&#39;) {        return this.formatPercentage(row.fatal_bug_fix_compliance_rate)      } else if (column.property === &#39;normal_bug_fix_compliance_rate&#39;) {        return this.formatPercentage(row.normal_bug_fix_compliance_rate)      } else if (column.property === &#39;bug_total_fix_compliance_rate&#39;) {        return this.formatPercentage(row.bug_total_fix_compliance_rate)      } else if (column.property === &#39;bug_density&#39;) {        return this.formatNumtoFixed(row.bug_density)      } else if (column.property === &#39;is_used&#39;) {        return this.formatte(row.is_used)      } else {        return row[column.property]      }    },    formatte(val) {      // console.log(row)      if (val === 0) {        return &#39;未使用&#39;      } else if (val === 1) {        return &#39;已使用&#39;      }    },    formatTime(val) {      if (val === &#39;&#39;) {        return &#39;--&#39;      } else {        return val      }    },    formatPercentage(val) {      // console.log(val)      return Math.floor(val * 100) + &#39;%&#39;    },    formatNumtoFixed(val) {      return val.toFixed(2)    },    StringUtil(row, column) {      const a = document.createElement(&#39;a&#39;)      a.setAttribute(&#39;href&#39;, row.url)      if (row.url_params) {        const url =          &#39;http://aisee.oa.com/apps/4eda5188f8/feedbacks?endDate=&#39; +          column.property +          &#39;+23%3A59&amp;levelId=6efa5d0d-6118-4715-acf7-4f36eaee8459&amp;levelType=1&amp;pid=1&amp;start=0&amp;startDate=&#39; +          column.property        a.setAttribute(&#39;href&#39;, url)        // console.log(url)      }      a.setAttribute(&#39;target&#39;, &#39;_blank&#39;)      document.body.appendChild(a)      a.click()    },    //    /** 合并方法 */    objectSpanMethod({ row, column, rowIndex, columnIndex }) {      if (columnIndex === 0) {        // console.log(row)        if (!row.labelName) {          return        }        const _row = this.testArr1[rowIndex]        const _col = 1        return {          rowspan: _row,          colspan: _col        }      }      // if (columnIndex === 1) {      //   const _row = this.testArr2[rowIndex]      //   const _col = _row &gt; 0 ? 1 : 0      //   return {      //     rowspan: _row,      //     colspan: _col      //   }      // }    },    // 处理数据    rowspan(spanArr, position, spanName) {      this.listData.forEach((item, index) =&gt; {        if (index === 0) {          spanArr.push(1)          position = 0        } else {          if (            this.listData[index][spanName] ===            this.listData[index - 1][spanName]          ) {            spanArr[position] += 1            spanArr.push(0)          } else {            spanArr.push(1)            position = index          }        }      })    }  }}&lt;/script&gt;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> UI组件 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> element table </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>VUE+ELEMENT-UI的后台项目封装组件--TABLE的封装</title>
+      <link href="/2021/12/22/vue-element-ui-de-hou-tai-xiang-mu-feng-zhuang-zu-jian-table-de-feng-zhuang/"/>
+      <url>/2021/12/22/vue-element-ui-de-hou-tai-xiang-mu-feng-zhuang-zu-jian-table-de-feng-zhuang/</url>
+      
+        <content type="html"><![CDATA[<p>子组件</p><pre><code>&lt;!-- * @Descripttion:  * @version:  * @Author: sueRimn * @Date: 2020-06-18 17:40:26 * @LastEditors: sueRimn * @LastEditTime: 2020-06-19 15:24:39--&gt;&lt;template&gt;  &lt;div class=&quot;table&quot;&gt;    &lt;el-table      :data=&quot;tableData&quot;      style=&quot;width: 100%&quot;      border      min-width=&quot;1190&quot;      max-height=&quot;300&quot;      :header-row-class-name=&quot;tableRowClassName&quot;      @selection-change=&quot;handleSelectionChange&quot;      @row-click=&quot;clickTable&quot;    &gt;      &lt;template v-for=&quot;(item, index) of columns&quot;&gt;        &lt;el-table-column          v-if=&quot;item.id === &#39;text&#39;&quot;          :key=&quot;index&quot;          :fixed=&quot;item.fixed&quot;          :prop=&quot;item.id&quot;          :label=&quot;item.label&quot;          :align=&quot;item.align ? item.align : &#39;center&#39;&quot;          :width=&quot;item.width&quot;        &gt;          &lt;!--if判断的是父组件传的表头是操作的id名--&gt;          &lt;template slot-scope=&quot;scope&quot;&gt;            &lt;el-button              v-for=&quot;item1 in item.list&quot;              :key=&quot;item1.id&quot;              @click=&quot;handleDelete(scope.row, item1.id)&quot;              type=&quot;text&quot;              size=&quot;small&quot;              &gt;{{ item1.name }}&lt;/el-button            &gt;            &lt;!--可以自行增加按钮，请改变点击事件的第二个参数，父组件会根据第二个参数判断当前点击的是什么按钮--&gt;          &lt;/template&gt;        &lt;/el-table-column&gt;        &lt;el-table-column          v-else-if=&quot;item.id === &#39;button&#39;&quot;          :key=&quot;index&quot;          :fixed=&quot;item.fixed&quot;          :prop=&quot;item.id&quot;          :label=&quot;item.label&quot;          :align=&quot;item.align ? item.align : &#39;center&#39;&quot;          :width=&quot;item.width&quot;        &gt;          &lt;!--if判断的是父组件传的表头是操作的id名--&gt;          &lt;template slot-scope=&quot;scope&quot;&gt;            &lt;el-button              v-for=&quot;item2 in item.list&quot;              :key=&quot;item2.id&quot;              @click=&quot;handleEdit(scope.row, item2.id)&quot;              size=&quot;mini&quot;              :type=&quot;item2.type&quot;              &gt;{{ item2.name }}&lt;/el-button            &gt;            &lt;!--可以自行增加按钮，请改变点击事件的第二个参数，父组件会根据第二个参数判断当前点击的是什么按钮--&gt;          &lt;/template&gt;        &lt;/el-table-column&gt;        &lt;el-table-column          v-else-if=&quot;item.index === &#39;index&#39;&quot;          :type=&quot;item.index&quot;          :key=&quot;index&quot;          :width=&quot;item.width&quot;        &gt;        &lt;/el-table-column&gt;        &lt;el-table-column          v-else          :label=&quot;item.label&quot;          :key=&quot;index&quot;          :fixed=&quot;item.fixed&quot;          :prop=&quot;item.id&quot;          :align=&quot;item.align ? item.align : &#39;center&#39;&quot;          :width=&quot;item.width&quot;          :type=&quot;item.type&quot;        &gt;        &lt;/el-table-column&gt;        &lt;!--可以传align,width和type来控制表格的居中，宽度和类型（比如需要序号，type传index）--&gt;      &lt;/template&gt;    &lt;/el-table&gt;    &lt;el-pagination      @size-change=&quot;handleSizeChange&quot;      @current-change=&quot;handleCurrentChange&quot;      :current-page=&quot;currentPage&quot;      :page-sizes=&quot;pagesizes&quot;      :page-size=&quot;pageSize&quot;      layout=&quot;total, sizes, prev, pager, next, jumper&quot;      :total=&quot;total&quot;    &gt;    &lt;/el-pagination&gt;  &lt;/div&gt;&lt;/template&gt;&lt;script&gt;export default {  props: {    tableData: {      // 表格数据源 默认为空数组      type: Array,      default: () =&gt; []    },    columns: {      // 表格的字段展示 默认为空数组      type: Array,      default: () =&gt; []    },    pagesizes: {      type: Array,      default: () =&gt; []    },    total: { type: Number, default: 0 },    pageSize: { type: Number, default: 0 }  },  data() {    return {      currentPage: 1    };  },  methods: {    // 正常    handleSelectionChange(val) {      this.$emit(&quot;handleSelectionChange&quot;, { val: val });    },    // 正常    clickTable(row, column, event) {      this.$emit(&quot;clickTable&quot;, { row: row, column: column, event: event });    },    // 正常    handleEdit(index, row) {      this.$emit(&quot;handleEdit&quot;, { index: index, row: row });    },    // 正常    handleDelete(index, row) {      this.$emit(&quot;handleDelete&quot;, { index: index, row: row });    },    handleSizeChange(val) {      console.log(`每页 ${val} 条`);      this.$emit(&quot;handleSizeChange&quot;, val);    },    handleCurrentChange(val) {      console.log(`当前页: ${val}`);      this.$emit(&quot;handleCurrentChange&quot;, val);    },    tableRowClassName({ row, rowIndex }) {      console.log(row, rowIndex);      if (rowIndex === 0) {        return &quot;warning-row&quot;;      } else if (rowIndex === 1) {        return &quot;warning-row&quot;;      }      return &quot;&quot;;    }  }};&lt;/script&gt;&lt;style lang=&quot;less&quot;&gt;.el-pagination {  margin-top: 20px;}//.warning-row .is-leaf 是修改table的表头的背景颜色；.warning-row .is-leaf { color: #1a68b5; background-color: #e3edf7 !important; } &lt;/style&gt;</code></pre><p>父组件</p><pre><code>1 &lt;flight-table  2           :tableData=&quot;tableData&quot;  3           :columns=&quot;columns&quot;  4           :pagesizes=&quot;pagesizes&quot;  5           @handleDelete=&quot;handleDelete&quot;  6           @handleSelectionChange=&quot;handleSelectionChange&quot;  7           @clickTable=&quot;clickTable&quot;  8           @handleEdit=&quot;handleEdit&quot;  9           @handleSizeChange=&quot;handleSizeChange&quot; 10           @handleCurrentChange=&quot;handleCurrentChange&quot; 11           :total=&quot;total&quot; 12           :pageSize=&quot;pageSize&quot; 13 &gt;&lt;/flight-table&gt; 14 import flightTable from &quot;@/components/flightTable.vue&quot;;    import jsondata from &quot;assets/json/vue.json&quot;;15  export default{ 16   components: { 17     flightTable , 18  19   }, 20     data() { 21         return { 22            tableData: [ 23         { 24           date: &quot;2016-05-03&quot;, 25           name: &quot;王小虎&quot;, 26           province: &quot;上海&quot;, 27           city: &quot;普陀区&quot;, 28           address: &quot;上海市普陀区金沙江路 1518 弄&quot;, 29           zip: 200333 30         }, 31         { 32           date: &quot;2016-05-02&quot;, 33           name: &quot;王小虎&quot;, 34           province: &quot;上海&quot;, 35           city: &quot;普陀区&quot;, 36           address: &quot;上海市普陀区金沙江路 1518 弄&quot;, 37           zip: 200333 38         }, 39         { 40           date: &quot;2016-05-04&quot;, 41           name: &quot;王小虎&quot;, 42           province: &quot;上海&quot;, 43           city: &quot;普陀区&quot;, 44           address: &quot;上海市普陀区金沙江路 1518 弄&quot;, 45           zip: 200333 46         }, 47         { 48           date: &quot;2016-05-01&quot;, 49           name: &quot;王小虎&quot;, 50           province: &quot;上海&quot;, 51           city: &quot;普陀区&quot;, 52           address: &quot;上海市普陀区金沙江路 1518 弄&quot;, 53           zip: 200333 54         }, 55         { 56           date: &quot;2016-05-08&quot;, 57           name: &quot;王小虎&quot;, 58           province: &quot;上海&quot;, 59           city: &quot;普陀区&quot;, 60           address: &quot;上海市普陀区金沙江路 1518 弄&quot;, 61           zip: 200333 62         }, 63         { 64           date: &quot;2016-05-06&quot;, 65           name: &quot;王小虎&quot;, 66           province: &quot;上海&quot;, 67           city: &quot;普陀区&quot;, 68           address: &quot;上海市普陀区金沙江路 1518 弄&quot;, 69           zip: 200333 70         }, 71         { 72           date: &quot;2016-05-07&quot;, 73           name: &quot;王小虎&quot;, 74           province: &quot;上海&quot;, 75           city: &quot;普陀区&quot;, 76           address: &quot;上海市普陀区金沙江路 1518 弄&quot;, 77           zip: 200333 78         } 79       ], 80       columns: [ 81         { 82           id: &quot;selection&quot;, 83           type: &quot;selection&quot;, 84           label: &quot;&quot;, 85           fixed: &quot;left&quot;, 86           width: &quot;55&quot;, 87           prop: &quot;&quot;, 88           isShow: true, 89           align: &quot;center&quot; 90         }, 91         { 92           id: &quot;button&quot;, 93           type: &quot;button&quot;, 94           label: &quot;操作&quot;, 95           fixed: &quot;left&quot;, 96           width: &quot;200&quot;, 97           prop: &quot;&quot;, 98           isShow: true, 99           align: &quot;center&quot;,100           list: [101             {102               id: &quot;examine&quot;,103               name: &quot;查看&quot;,104               type: &quot;&quot;105             },106             {107               id: &quot;compile&quot;,108               name: &quot;编辑&quot;,109               type: &quot;danger&quot;110             }111           ]112         },113         {114           id: &quot;text&quot;,115           type: &quot;text&quot;,116           label: &quot;跳转&quot;,117           fixed: &quot;left&quot;,118           width: &quot;120&quot;,119           prop: &quot;&quot;,120           isShow: true,121           align: &quot;center&quot;,122           list: [{ id: &quot;jump&quot;, name: &quot;跳转&quot;, type: &quot;&quot;, handleClick: this.jump }]123         },124         {125           id: &quot;index&quot;,126           type: &quot;index&quot;,127           label: &quot;序列号&quot;,128           fixed: &quot;left&quot;,129           width: &quot;120&quot;,130           prop: &quot;&quot;,131           isShow: true,132           align: &quot;center&quot;133         },134         {135           id: &quot;date&quot;,136           type: &quot;&quot;,137           label: &quot;日期&quot;,138           fixed: &quot;left&quot;,139           width: &quot;150&quot;,140           prop: &quot;date&quot;,141           isShow: true,142           align: &quot;center&quot;143         },144         {145           id: &quot;name&quot;,146           type: &quot;&quot;,147           label: &quot;姓名&quot;,148           fixed: false,149           width: &quot;120&quot;,150           prop: &quot;name&quot;,151           isShow: true,152           align: &quot;center&quot;153         },154         {155           id: &quot;province&quot;,156           type: &quot;&quot;,157           label: &quot;省份&quot;,158           fixed: false,159           width: &quot;120&quot;,160           prop: &quot;province&quot;,161           isShow: true,162           align: &quot;center&quot;163         },164         {165           id: &quot;city&quot;,166           type: &quot;&quot;,167           label: &quot;市区&quot;,168           fixed: false,169           width: &quot;120&quot;,170           prop: &quot;city&quot;,171           isShow: true,172           align: &quot;center&quot;173         },174         {175           id: &quot;address&quot;,176           type: &quot;&quot;,177           label: &quot;地址&quot;,178           fixed: false,179           width: &quot;300&quot;,180           prop: &quot;address&quot;,181           isShow: true,182           align: &quot;center&quot;183         },184         {185           id: &quot;zip&quot;,186           type: &quot;&quot;,187           label: &quot;邮编&quot;,188           fixed: false,189           width: &quot;120&quot;,190           prop: &quot;zip&quot;,191           isShow: true,192           align: &quot;center&quot;193         }194       ],195       pagesizes: [1, 2, 3, 4],196       total: 10,197       pageSize: 1198          }199     },200     methods: {201       //text的跳转触发202     handleDelete(val) {203       console.log(val);204       this.StringUtil.getDecorator();205     },206     // checkbox的触发接收207     handleSelectionChange(val) {208       console.log(val);209       this.StringUtil.getDecorator();210     },211     // 点击tbody的行触发212     clickTable(val) {213       console.log(val);214       this.StringUtil.getDecorator();215     },216     //button的触发217     handleEdit(val) {218       console.log(val);219       this.StringUtil.getDecorator();220     },221     handleSizeChange(val) {222       console.log(val);223       this.total = 100;224       this.tableData = jsondata.tabledata;225       console.log(jsondata.tableData);226     },227     handleCurrentChange(val) {228       console.log(val);229       this.total = 200;230 231       this.tableData = jsondata.tabledata2;232     }233     }234 }235  &lt;/script&gt;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 封装UI组件 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vue element </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>关于部署VUE项目--linux篇</title>
+      <link href="/2021/09/28/guan-yu-bu-shu-vue-xiang-mu-linux-pian/"/>
+      <url>/2021/09/28/guan-yu-bu-shu-vue-xiang-mu-linux-pian/</url>
+      
+        <content type="html"><![CDATA[<p>1、首先，准备好两个工具，xshell、filezilla</p><p>第一个工具是为了连接Linux，<br>第二个工具是为了比较方便的上传文件到Linux。</p><p>2、使用xshell连接的时候。填上对应的地址就行。然后接下来就是点确实啥的，连上去就行。<br><img src="https://image-static.segmentfault.com/231/745/2317455061-5dcd2bd6d421e_fix732" alt="Image text"><br>3、连接成功后，基本上都差补多，然后就是有个#号<br><img src="https://image-static.segmentfault.com/230/287/2302874803-5dcd2ca5ae6b9_fix732" alt="Image text"></p><p>4、初次安装的nginx的忽略本步骤.</p><pre><code>4.1 删除nginx与其配置文件    sudo apt-get --purge remove nginx4.2 自动移除全部不适用的软件包    sudo apt-get autoremove4.3 列出与nginx相关的软件    dpkg --get-selections|grep nginx    假如有以下的：        nginx                       install        nginx-common                    install        nginx-core                  install4.4删除在4.3中查询出与nginx有关的软件    sudo apt-get --purge remove nginx    sudo apt-get --purge remove nginx-common    sudo apt-get --purge remove nginx-core4.5 查看nginx正在运行的进程，如果有就kill掉    ps -ef |grep nginx4.6.kill nginx进程    sudo kill -9 -8  //注释-9 -8进程id4.7.全局查找与nginx相关的文件    sudo  find  /  -name  nginx*4.8 全部删除    sudo rm -rf file4.9 重新安装    sudo apt-get update    sudo apt-get install nginx</code></pre><p>5、nginx的使用</p><pre><code>1.切换到nginx的配置文件夹的目录下cd /etc/nginx/conf.d2.给对应的网站的配置文件，命名规则：项目名.conf其实没啥要求主要是为自己好看，然后尾缀为conf.3.对配置2进行添加配置参数sudo vim 你在第二步中写项目名.conf</code></pre><p>6、nginx的conf的主要内容</p><p><img src="https://image-static.segmentfault.com/367/963/3679631775-5dcd331627c9d_fix732" alt="Image text"></p><p>注意：在每行语句的结束的地方要加上英文的 ;</p><pre><code>server {    listen 端口号;    server_name IP地址;    location / {            root  /var/www/html/gameSystem; // 文件路径            try_files $uri $uri/ @router;              index  index.html index.htm;  // 主页面    }    location /mgr {            proxy_pass http:XXXX;  // 后台地址    }    location @router {        rewrite ^.*$ /index.html last;    }}</code></pre><p>7、好了，保存退出。对于vim的操作，百度一下吧</p><p>8、重启服务器：</p><p>service nginx restart</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 系统 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> linux nginx vue </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>axios 二次封装</title>
+      <link href="/2021/09/17/axios-er-ci-feng-zhuang/"/>
+      <url>/2021/09/17/axios-er-ci-feng-zhuang/</url>
+      
+        <content type="html"><![CDATA[<p>axios库二次封装<br>1、新建utils文件夹，在文件夹里面新建reques.js</p><pre><code>import axios from &#39;axios&#39;;import { Message, Loading } from &#39;element-ui&#39;import qs from &#39;qs&#39;; //参数序列化，把数据格式转为 x-www-form-urlencodedlet BASE_URL = &#39;&#39;, loadingInstance;let HOST = process.env.NODE_ENV;switch (HOST) {    case &#39;development&#39;:        BASE_URL = &#39;http://localhost:888&#39;;        break;    case &#39;test&#39;:        BASE_URL = &#39;http://192.168.101.21/foxcubeCrm/&#39;;        break;    default:        BASE_URL = &#39;http://192.168.101.21/foxcubeCrm/&#39;;}axios.create({    //crossDomain: true,//设置cross跨域    withCredentials: false,  //跨域请求是否允许携带cookie资源凭证    baseurl: BASE_URL,    time: 1000               //请求超时时间    // responseType:&quot;arraybuffer&quot;  返回的数据格式})//  request请求拦截器axios.interceptors.request.use(config =&gt; {    // let token=localstorage.getItem(&#39;token&#39;);    // token &amp;&amp; (config.headers.Authorization=token);//请求携带token    // config.headers = {    //     &#39;Content-Type&#39;: &#39;application/x-www-form-urlencoded&#39;  //转换数据格式    // }    loadingInstance = Loading.service({        lock: true,        text: &#39;飞速加载中……&#39;,    });    return config;}, error =&gt; {    return Promise.reject(error);})// 成功状态 有3的接口一般是资源重定向// service.defaults.validateStatus=status=&gt;{//     return /^(2|3)\d{2}$/.test(status);// };// response响应拦截器axios.interceptors.response.use(response =&gt; {    setTimeout(() =&gt; {        loadingInstance.close();    }, 300)    return response;}, error =&gt; {    setTimeout(() =&gt; {        loadingInstance.close();    }, 300)    let { response } = error;    if (response) {        //服务器有返回内容        var errormsg = &#39;&#39;;        switch (response.status) {            case 400:                errormsg = &#39;错误请求&#39;                break;            case 401:                errormsg = &#39;未登录,请重新登录&#39;                break;            case 403:                errormsg = &#39;决绝访问&#39;                break;            case 404:                errormsg = &#39;请求错误，未找到该资源&#39;                break;            case 405:                errormsg = &#39;请求方法未允许&#39;                break;            case 408:                errormsg = &#39;请求超时&#39;                break;            case 500:                errormsg = &#39;服务器出错&#39;                break;            case 501:                errormsg = &#39;网络未实现&#39;                break;            case 502:                errormsg = &#39;网络错误&#39;                break;            case 503:                errormsg = &#39;服务不可用&#39;                break;            case 504:                errormsg = &#39;网络超时&#39;                break;            case 505:                errormsg = &#39;http版本不支持该请求&#39;                break;            default:                errormsg = &#39;连接错误&#39;        }        Message({ type: &#39;warning&#39;, message: errormsg });        return false;    } else {        //服务器连结果都没有返回  有可能是断网或者服务器奔溃        if (!window.navigator.online) {            //断网处理            Message(&#39;网络中断&#39;);            return;        } else {            //服务器奔了            Message(&#39;服务器奔了&#39;);            return Promise.reject(error);        }    }})/**get 方法，对应get请求*@param {String} url [请求的url地址]*@param {Object} params[请求携带的参数]]*/export function get(url, params) {    return new Promise((resolve, reject) =&gt; {        axios.get(url, {            params: params        }).then(res =&gt; {            resolve(res.data);        }).catch(err =&gt; {            reject(err.data);        })    });}/**post 方法，对应post请求*@param {String} url [请求的url地址]*@param {Object} params[请求携带的参数]]*/export function post(url, params) {    return new Promise((resolve, reject) =&gt; {        axios.post(url, params)            .then(res =&gt; {                resolve(res.data);            }).catch(err =&gt; {                reject(err.data);            })    });}/**封装patch请求 *@param url * @param params * @returns {Promise}*/export function patch(url, params) {    return new Promise((resolve, reject) =&gt; {        axios.patch(url, params)            .then(res =&gt; {                resolve(res.data);            }, err =&gt; {                reject(err);            })    })}/**put 请求*@param url* @param params*/export function put(url, params) {    return new Promise((resolve, reject) =&gt; {        axios.put(url, params)            .then(res =&gt; {                resolve(res.data);            }, err =&gt; {                reject(err);            })    })}2.新建api文件夹，在api文件夹里创建对应模块的js，写接口调用的方法import {post,get,put,patch} from &#39;@/utils/request&#39;export const login = params =&gt;post(&#39;/api/login&#39;,params)3.在login.vue直接引入该方法就可以直接使用import { login } from &quot;@/api/login&quot;;login(data).then(res=&gt;{})4.也可以在main.js引入直接到挂载到原型prototype上import { post, get, put, patch } from &#39;./utils/request&#39;// 挂载到原型上Vue.prototype.$post = post;Vue.prototype.$get = get;在需要使用请求数据的地方直接使用就ok　　this.$post(&#39;/api/login&#39;,data).then(res=&gt;{         console.log(res)   })</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 网络 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> axios </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Pycharm的Settings中Python Interpreter一片空白nothing to show，并且没有任何选项可以选择解释器</title>
+      <link href="/2021/09/16/pycharm-de-settings-zhong-python-interpreter-yi-pian-kong-bai-nothing-to-show-bing-qie-mei-you-ren-he-xuan-xiang-ke-yi-xuan-ze-jie-shi-qi/"/>
+      <url>/2021/09/16/pycharm-de-settings-zhong-python-interpreter-yi-pian-kong-bai-nothing-to-show-bing-qie-mei-you-ren-he-xuan-xiang-ke-yi-xuan-ze-jie-shi-qi/</url>
+      
+        <content type="html"><![CDATA[<p>解决方法：</p><p>关掉Pycharm，删除项目文件夹下的.idea和Scripts文件夹，再重新打开Pycharm。右下角出现：</p><p><img src="https://img-blog.csdnimg.cn/20210713114426422.png" alt="Image text"></p><p> 点击之后出现：</p><p><img src="https://img-blog.csdnimg.cn/20210713114602616.png" alt="Image text"></p><p>选择Add Interpreter…之后就可以重新选择解释器了，Settings那里也恢复正常了</p><p><img src="https://img-blog.csdnimg.cn/20210713114715643.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzU4ODI3Mzk5,size_16,color_FFFFFF,t_70" alt="Image text"></p><p> 尝试下右键run，一切正常。<br>、</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 软件工具 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Pycharm python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>帮助</title>
+      <link href="/2021/09/16/bang-zhu/"/>
+      <url>/2021/09/16/bang-zhu/</url>
+      
+        <content type="html"><![CDATA[<p>写文章、发布文章<br>首先在博客根目录下右键打开git bash，安装一个扩展npm i hexo-deployer-git。</p><p>然后输入hexo new post “article title”，新建一篇文章。</p><p>然后打开D:\study\program\blog\source_posts的目录，可以发现下面多了一个文件夹和一个.md文件，一个用来存放你的图片等数据，另一个就是你的文章文件啦。</p><p>编写完markdown文件后，根目录下输入hexo g生成静态网页，然后输入hexo s可以本地预览效果，最后输入hexo d上传到github上。这时打开你的github.io主页就能看到发布的文章啦。</p><p>来源: 韦阳的博客<br>作者: 韦阳<br>链接: <a href="https://godweiyang.com/2018/04/13/hexo-blog/" target="_blank" rel="noopener">https://godweiyang.com/2018/04/13/hexo-blog/</a><br>本文章著作权归作者所有，任何形式的转载都请注明出处。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 帮助 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 帮助 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>空白</title>
+      <link href="/2020/01/14/5w2h-godweiyang/"/>
+      <url>/2020/01/14/5w2h-godweiyang/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> 随笔 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 博客 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>

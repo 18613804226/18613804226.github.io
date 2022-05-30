@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>toto的博客</title>
+  
+  <subtitle>welcome</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://18613804226.github.io/"/>
+  <updated>2022-05-30T03:54:13.681Z</updated>
+  <id>https://18613804226.github.io/</id>
+  
+  <author>
+    <name>toto</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Element-ui Table 组件中动态合并单元格</title>
+    <link href="https://18613804226.github.io/2022/01/25/element-ui-table-zu-jian-zhong-dong-tai-he-bing-dan-yuan-ge/"/>
+    <id>https://18613804226.github.io/2022/01/25/element-ui-table-zu-jian-zhong-dong-tai-he-bing-dan-yuan-ge/</id>
+    <published>2022-01-25T09:32:46.000Z</published>
+    <updated>2022-05-30T03:54:13.681Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;上代码&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+&amp;lt;template&amp;gt;
+  &amp;lt;div class=&amp;quot;table&amp;quot;&amp;gt;
+    &amp;lt;el-table
+      :data=&amp;quot;tableData !== null ?
+        
+      
+    
+    </summary>
+    
+      <category term="UI组件" scheme="https://18613804226.github.io/categories/UI%E7%BB%84%E4%BB%B6/"/>
+    
+    
+      <category term="element table" scheme="https://18613804226.github.io/tags/element-table/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>VUE+ELEMENT-UI的后台项目封装组件--TABLE的封装</title>
+    <link href="https://18613804226.github.io/2021/12/22/vue-element-ui-de-hou-tai-xiang-mu-feng-zhuang-zu-jian-table-de-feng-zhuang/"/>
+    <id>https://18613804226.github.io/2021/12/22/vue-element-ui-de-hou-tai-xiang-mu-feng-zhuang-zu-jian-table-de-feng-zhuang/</id>
+    <published>2021-12-22T07:53:50.000Z</published>
+    <updated>2022-05-30T03:54:13.681Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;子组件&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: sueRimn
+ * @Date: 2020-06-18 17:40:26
+ * @LastEditors: sueRimn
+
+        
+      
+    
+    </summary>
+    
+      <category term="封装UI组件" scheme="https://18613804226.github.io/categories/%E5%B0%81%E8%A3%85UI%E7%BB%84%E4%BB%B6/"/>
+    
+    
+      <category term="vue element" scheme="https://18613804226.github.io/tags/vue-element/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于部署VUE项目--linux篇</title>
+    <link href="https://18613804226.github.io/2021/09/28/guan-yu-bu-shu-vue-xiang-mu-linux-pian/"/>
+    <id>https://18613804226.github.io/2021/09/28/guan-yu-bu-shu-vue-xiang-mu-linux-pian/</id>
+    <published>2021-09-28T02:31:25.000Z</published>
+    <updated>2022-05-30T03:54:13.682Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;1、首先，准备好两个工具，xshell、filezilla&lt;/p&gt;
+&lt;p&gt;第一个工具是为了连接Linux，&lt;br&gt;第二个工具是为了比较方便的上传文件到Linux。&lt;/p&gt;
+&lt;p&gt;2、使用xshell连接的时候。填上对应的地址就行。然后接下来就是点确实啥的，连上去就行。&lt;br
+        
+      
+    
+    </summary>
+    
+      <category term="系统" scheme="https://18613804226.github.io/categories/%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="linux nginx vue" scheme="https://18613804226.github.io/tags/linux-nginx-vue/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>axios 二次封装</title>
+    <link href="https://18613804226.github.io/2021/09/17/axios-er-ci-feng-zhuang/"/>
+    <id>https://18613804226.github.io/2021/09/17/axios-er-ci-feng-zhuang/</id>
+    <published>2021-09-17T02:59:04.000Z</published>
+    <updated>2022-05-30T03:54:13.682Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;axios库二次封装&lt;br&gt;1、新建utils文件夹，在文件夹里面新建reques.js&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import axios from &amp;#39;axios&amp;#39;;
+import { Message, Loading } from
+        
+      
+    
+    </summary>
+    
+      <category term="网络" scheme="https://18613804226.github.io/categories/%E7%BD%91%E7%BB%9C/"/>
+    
+    
+      <category term="axios" scheme="https://18613804226.github.io/tags/axios/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Pycharm的Settings中Python Interpreter一片空白nothing to show，并且没有任何选项可以选择解释器</title>
+    <link href="https://18613804226.github.io/2021/09/16/pycharm-de-settings-zhong-python-interpreter-yi-pian-kong-bai-nothing-to-show-bing-qie-mei-you-ren-he-xuan-xiang-ke-yi-xuan-ze-jie-shi-qi/"/>
+    <id>https://18613804226.github.io/2021/09/16/pycharm-de-settings-zhong-python-interpreter-yi-pian-kong-bai-nothing-to-show-bing-qie-mei-you-ren-he-xuan-xiang-ke-yi-xuan-ze-jie-shi-qi/</id>
+    <published>2021-09-16T09:53:27.000Z</published>
+    <updated>2022-05-30T03:54:13.681Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;解决方法：&lt;/p&gt;
+&lt;p&gt;关掉Pycharm，删除项目文件夹下的.idea和Scripts文件夹，再重新打开Pycharm。右下角出现：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img-blog.csdnimg.cn/20210713114426422.png&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="软件工具" scheme="https://18613804226.github.io/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="Pycharm python" scheme="https://18613804226.github.io/tags/Pycharm-python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>帮助</title>
+    <link href="https://18613804226.github.io/2021/09/16/bang-zhu/"/>
+    <id>https://18613804226.github.io/2021/09/16/bang-zhu/</id>
+    <published>2021-09-16T03:02:02.000Z</published>
+    <updated>2022-05-30T03:54:13.682Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;写文章、发布文章&lt;br&gt;首先在博客根目录下右键打开git bash，安装一个扩展npm i hexo-deployer-git。&lt;/p&gt;
+&lt;p&gt;然后输入hexo new post “article
+        
+      
+    
+    </summary>
+    
+      <category term="帮助" scheme="https://18613804226.github.io/categories/%E5%B8%AE%E5%8A%A9/"/>
+    
+    
+      <category term="帮助" scheme="https://18613804226.github.io/tags/%E5%B8%AE%E5%8A%A9/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>空白</title>
+    <link href="https://18613804226.github.io/2020/01/14/5w2h-godweiyang/"/>
+    <id>https://18613804226.github.io/2020/01/14/5w2h-godweiyang/</id>
+    <published>2020-01-14T07:27:31.000Z</published>
+    <updated>2022-05-30T03:54:13.680Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="随笔" scheme="https://18613804226.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="博客" scheme="https://18613804226.github.io/tags/%E5%8D%9A%E5%AE%A2/"/>
+    
+  </entry>
+  
+</feed>
