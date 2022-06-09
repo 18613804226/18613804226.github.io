@@ -576,24 +576,22 @@
     </div>
 
     
-    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-
-
+    <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
 
 <div class="card gitalk-card" data-aos="fade-up">
     <div id="gitalk-container" class="card-content"></div>
 </div>
 
-
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
 <script>
     let gitalk = new Gitalk({
         clientID: '4a29bb6b905464620616',
-        clientSecret: '2d60acca01238f5e3a836be79f3efee2902be703',
+        clientSecret: 'ba2a28206821d38763096c9ad4c7a68085c5e5e3',
         repo: 'Gitalk',
         owner: '18613804226',
         admin: ['18613804226'],
-        id: location.pathname,   
+        id: location.pathname,    
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
